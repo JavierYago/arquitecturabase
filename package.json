@@ -1,0 +1,24 @@
+{
+  "name": "arquitecturabase",
+  "version": "1.0.0",
+  "description": "proyecto de la asignatura de procesos",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine servidor/modeloSpec.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JavierYago/arquitecturabase.git"
+  },
+  "author": "Javier Yago Giménez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JavierYago/arquitecturabase/issues"
+  },
+  "homepage": "https://github.com/JavierYago/arquitecturabase#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "jasmine": "^5.12.0"
+  }
+}
