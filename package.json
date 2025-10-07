@@ -4,8 +4,8 @@
   "description": "proyecto de la asignatura de procesos",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine servidor/modeloSpec.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "jasmine servidor/modeloSpec.js"
   },
   "repository": {
     "type": "git",
