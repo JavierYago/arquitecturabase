@@ -109,6 +109,16 @@ function ControlWeb(){
     };
     // fin: panel y handlers compactos
 
+    this.mostrarMensaje=function(msg){
+        let cadena='<div class="alert alert-info alert-dismissible fade show mt-4" role="alert">';
+        cadena = cadena + msg;
+        cadena = cadena + '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+        cadena = cadena + '<span aria-hidden="true">&times;</span>';
+        cadena = cadena + '</button></div>';
+        $("#mensajes").append(cadena);
+    };
+
+
     this.comprobarSesion=function(){
         let nick=localStorage.getItem("nick");
         if (nick){
