@@ -108,4 +108,14 @@ function ControlWeb(){
         });
     };
     // fin: panel y handlers compactos
+
+    this.comprobarSesion=function(){
+        let nick=localStorage.getItem("nick");
+        if (nick){
+            cw.mostrarMensaje("Bienvenido al sistema, "+nick);
+        }
+        else{
+            cw.mostrarAgregarUsuario();
+        }
+    };
 }
