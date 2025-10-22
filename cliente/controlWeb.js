@@ -12,7 +12,6 @@ function ControlWeb(){
             $("#mAU").remove();
         });
     }
-    
 
     this.mostrarPanelOps = function(){
         const panel = `
@@ -109,50 +108,4 @@ function ControlWeb(){
         });
     };
     // fin: panel y handlers compactos
-
-    // Método utilitario para mostrar mensajes desde fuera del panel
-        // Uso: cw.mostrarMensaje('texto', 'success'|'info'|'warning'|'danger')
-        this.mostrarMensaje = function(msg, tipo){
-            // Si existe el área de resultado del panel, úsala
-            var $res = $('#resultadoUsuarios');
-            if ($res.length){
-                $res.text(msg);
-                return;
-            }
-            // Fallback: mostrar un alert simple en #au
-            var clase = 'alert-info';
-            if (tipo === 'success') clase = 'alert-success';
-            else if (tipo === 'warning') clase = 'alert-warning';
-            else if (tipo === 'danger' || tipo === 'error') clase = 'alert-danger';
-        
-            var $au = $('#au');
-            if (!$au.length){ return; } // no hay dónde pintar
-            var $box = $('#cw-msg');
-            if (!$box.length){
-                $box = $('<div id="cw-msg" class="alert" role="alert"></div>');
-                $au.prepend($box);
-            }
-            $box.removeClass('alert-info alert-success alert-warning alert-danger').addClass(clase).text(msg);
-        };
-
-
-    this.comprobarSesion=function(){
-        let nick=$.cookie("nick");
-        if (nick){
-            cw.mostrarMensaje("Bienvenido al sistema, "+nick);
-        }
-        else{
-            cw.mostrarAgregarUsuario();
-        }
-    };
-
-    this.salir=function(){
-        $.removeCookie("nick");
-        cw.mostrarMensaje("Hasta luego!");
-        //añade 20 segundos de espera antes de recargar la página
-        setTimeout(function(){
-            location.reload();
-        }, 2000);
-    };
-
 }
