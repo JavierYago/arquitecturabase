@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 // Usa la URL de entorno si existe, si no fallback a localhost
-const baseUrl=(process.env.url).replace(/\/$/, '') || 'http://localhost:3000';
+const baseUrl = ((process.env.url || 'http://localhost:3000')).replace(/\/$/, '');
 const uri = process.env.uri;
 
 const transporter = nodemailer.createTransport({
@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
 //send();
 
 module.exports.enviarEmail=async function(direccion, key, men) {
-    const confirmUrl = `${baseUrl}confirmarUsuario/${encodeURIComponent(direccion)}/${encodeURIComponent(key)}`;
+    const confirmUrl = `${baseUrl}/confirmarUsuario/${encodeURIComponent(direccion)}/${encodeURIComponent(key)}`;
     const html = `
         <div style="font-family:Arial,Helvetica,sans-serif; line-height:1.6; color:#222;">
             <h2 style="margin-bottom:8px;">Bienvenido a Sistema</h2>
@@ -31,11 +31,16 @@ module.exports.enviarEmail=async function(direccion, key, men) {
             <p style="font-size:12px;color:#666;">Este mensaje se envió a ${direccion}. Si no esperabas este correo, puedes ignorarlo.</p>
         </div>`;
 
-    await transporter.sendMail({
-        from: process.env.email_user,
-        to: direccion,
-        subject: men,
-        text: 'Pulsa aquí para confirmar cuenta',
-        html: '<p>Bienvenido a Sistema</p><p><a href="'+confirmUrl+'">Pulsa aquí para confirmar cuenta</a></p>'
-    });
+    try{
+        await transporter.sendMail({
+            from: process.env.email_user,
+            to: direccion,
+            subject: men,
+            text: `Pulsa aquí para confirmar cuenta: ${confirmUrl}`,
+            html
+        });
+        console.info('[email] Confirmación enviada', {to:direccion, url:confirmUrl});
+    } catch(err){
+        console.error('[email] Error enviando correo', err);
+    }
 }
