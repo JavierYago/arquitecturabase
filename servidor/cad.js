@@ -42,14 +42,25 @@ function CAD(){
     }
 
     function buscar(coleccion, criterio, callback){
-        coleccion.find(criterio).toArray(function(error,usuarios){
-            if(usuarios.length==0){
-                callback(undefined);
+        try{
+            if(!coleccion){
+                console.warn('[CAD.buscar] Colección no inicializada');
+                return callback(undefined);
             }
-            else{
+            coleccion.find(criterio).toArray(function(error,usuarios){
+                if(error){
+                    console.error('[CAD.buscar] Error en find/toArray', error);
+                    return callback(undefined);
+                }
+                if(!usuarios || usuarios.length==0){
+                    return callback(undefined);
+                }
                 callback(usuarios[0]);
-            }
-        });
+            });
+        } catch(err){
+            console.error('[CAD.buscar] Excepción inesperada', err);
+            callback(undefined);
+        }
     }
 
     function insertar(coleccion, elemento, callback){

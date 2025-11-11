@@ -58,23 +58,33 @@ function Sistema(){
         if(!obj.nick){
             obj.nick=obj.email;
         }
-        this.cad.buscarUsuario({"email":obj.email},async function(usr){
-            if (!usr){
-                let key=Date.now().toString();
-                obj.confirmada=false;
-                obj.key=key;
-                const hash = await bcrypt.hash(obj.password, 10);
-                obj.password=hash;
-                modelo.cad.insertarUsuario(obj, function(res){
-                    callback(res);
-                });
-                correo.enviarEmail(obj.email, obj.key, "Confirma cuenta");
-            }
-            else
-            {
-                callback({"email":-1});
-            }
-        });
+        try{
+            this.cad.buscarUsuario({"email":obj.email},async function(usr){
+                try{
+                    if (!usr){
+                        let key=Date.now().toString();
+                        obj.confirmada=false;
+                        obj.key=key;
+                        const hash = await bcrypt.hash(obj.password, 10);
+                        obj.password=hash;
+                        modelo.cad.insertarUsuario(obj, function(res){
+                            callback(res);
+                        });
+                        // email asíncrono sin bloquear respuesta
+                        correo.enviarEmail(obj.email, obj.key, "Confirma cuenta").catch(e=>console.error('[registrarUsuario] Error enviando correo', e));
+                    }
+                    else{
+                        callback({"email":-1});
+                    }
+                } catch(inner){
+                    console.error('[registrarUsuario] Error interno en callback buscarUsuario', inner);
+                    callback({"email":-1});
+                }
+            });
+        } catch(err){
+            console.error('[registrarUsuario] Excepción', err);
+            callback({"email":-1});
+        }
     }
 
     this.loginUsuario=function(obj, callback){
