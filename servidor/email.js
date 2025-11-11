@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 // Usa la URL de entorno si existe, si no fallback a localhost
-const baseUrl=(process.env.url).replace(/\/$/, '');
+const baseUrl=(process.env.url).replace(/\/$/, '') || 'http://localhost:3000';
 const uri = process.env.uri;
 
 const transporter = nodemailer.createTransport({
