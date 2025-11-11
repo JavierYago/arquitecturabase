@@ -112,6 +112,11 @@ app.post("/registrarUsuario", function(request, response){
         if(!email || !password){
             return response.status(400).json({error:'Email y contraseña requeridos'});
         }
+        // Evita 500 si la BD todavía no está conectada
+        if(!sistema.cad || !sistema.cad.usuarios){
+            console.warn('[POST /registrarUsuario] BD no conectada aún');
+            return response.status(503).json({error:'Base de datos no conectada. Prueba de nuevo en unos segundos.'});
+        }
         sistema.registrarUsuario({email, password}, function(res){
             if(res && res.email && res.email!=-1){
                 return response.json({nick:res.email});
