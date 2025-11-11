@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
 //send();
 
 module.exports.enviarEmail=async function(direccion, key, men) {
-    const confirmUrl = `${baseUrl}/confirmarUsuario/${encodeURIComponent(direccion)}/${encodeURIComponent(key)}`;
+    const confirmUrl = `${baseUrl}confirmarUsuario/${encodeURIComponent(direccion)}/${encodeURIComponent(key)}`;
     const html = `
         <div style="font-family:Arial,Helvetica,sans-serif; line-height:1.6; color:#222;">
             <h2 style="margin-bottom:8px;">Bienvenido a Sistema</h2>
