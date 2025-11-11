@@ -5,8 +5,7 @@ function CAD(){
     this.usuarios;
     this.conectar=async function(callback){
         let cad=this;
-        let client= new
-        mongo(process.env.mongo_db);
+        let client= new mongo(process.env.mongo_db);
         await client.connect();
         const database=client.db("sistema");
         cad.usuarios=database.collection("usuarios");
