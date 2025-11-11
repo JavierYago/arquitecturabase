@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 // Usa la URL de entorno si existe, si no fallback a localhost
 const baseUrl=(process.env.url).replace(/\/$/, '');
+const uri = process.env.uri;
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -35,6 +36,6 @@ module.exports.enviarEmail=async function(direccion, key, men) {
         to: direccion,
         subject: men,
         text: 'Pulsa aquí para confirmar cuenta',
-        html: '<p>Bienvenido a Sistema</p><p><a href="'+baseUrl+'confirmarUsuario/'+direccion+'/'+key+'">Pulsa aquí para confirmar cuenta</a></p>'
+        html: '<p>Bienvenido a Sistema</p><p><a href="'+uri+'confirmarUsuario/'+direccion+'/'+key+'">Pulsa aquí para confirmar cuenta</a></p>'
     });
 }
