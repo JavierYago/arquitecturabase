@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "jasmine servidor/modeloSpec.js"
+    "test": "jasmine servidor/modeloSpec.js",
+    "dev": "node --env-file .env index.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,18 @@
   },
   "homepage": "https://github.com/JavierYago/arquitecturabase#readme",
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "body-parser": "^2.2.0",
+    "cookie-session": "^2.1.1",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "jasmine": "^5.12.0"
+    "express-session": "^1.18.2",
+    "jasmine": "^5.12.0",
+    "mongodb": "^4.4.0",
+    "nodemailer": "^7.0.10",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-google-one-tap": "^1.0.1",
+    "passport-local": "^1.0.0"
   }
 }

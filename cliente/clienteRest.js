@@ -4,14 +4,15 @@ function ClienteRest(){
         $.getJSON("/agregarUsuario/"+nick,function(data){
             let msg="El nick " +nick + " ha sido registrado";
             if (data.nick!=-1){
-                console.log("Usuario "+nick+" ha sido registrado")
+                console.info("Usuario "+nick+" registrado");
                 msg = "Bienvenido al sistema, " + nick;
                 $.cookie("nick", nick);
             }
             else{
-                console.log("El nick ya está ocupado");
+                console.warn("El nick ya está ocupado");
+                msg = "El nick ya está ocupado";
             }
-            cw.mostrarMensaje(msg);
+            cw.mostrarMensaje(msg, data.nick!=-1? 'success':'warning');
         })
     }
     this.agregarUsuario2=function(nick){
@@ -33,6 +34,7 @@ function ClienteRest(){
             contentType:'application/json'
         });
     }
+    
     this.obtenerUsuarios=function(){
         $.getJSON("/obtenerUsuarios",function(data){
             console.log(data);
@@ -57,5 +59,62 @@ function ClienteRest(){
                 console.log("El nick no existe");
             }
         }) 
+    }
+
+    this.registrarUsuario=function(email, password){
+        $.ajax({
+            type:'POST',
+            url:'/registrarUsuario',
+            data: JSON.stringify({"email": email, "password": password}),
+            success:function(data){
+                if(data && data.nick && data.nick!=-1){
+                    console.info("Registro ok para "+data.nick);
+                    $.cookie("nick", data.nick);
+                    cw.limpiar();
+                    cw.mostrarMensaje("Registro correcto. Revisa tu correo para confirmar la cuenta.", 'success');
+                }
+                else{
+                    cw.mostrarMensaje("No se pudo registrar. ¿Email ya en uso?", 'warning');
+                }
+            },
+            error:function(xhr, textStatus, errorThrown){
+                console.error("Registro fallido:", textStatus, errorThrown);
+                cw.mostrarMensaje("Error de registro: "+(xhr.responseJSON?.error || textStatus), 'danger');
+            },
+            contentType:'application/json'
+        });
+    }
+
+    this.loginUsuario=function(email, password){
+        $.ajax({
+            type:'POST',
+            url:'/loginUsuario',
+            data: JSON.stringify({"email": email, "password": password}),
+            success:function(data){
+                if(data && data.nick && data.nick!=-1){
+                    console.info("Login ok para "+data.nick);
+                    $.cookie("nick", data.nick);
+                    cw.limpiar();
+                    cw.mostrarMensaje("Bienvenido al sistema, "+data.nick);
+                }
+                else{
+                    console.warn("No se pudo iniciar sesión");
+                    cw.mostrarMensaje("Credenciales inválidas o cuenta no confirmada", 'warning');
+                    cw.mostrarLogin();
+                }
+            },
+            error:function(xhr, textStatus, errorThrown){
+                console.error("Login fallido:", textStatus, errorThrown);
+                cw.mostrarMensaje("Error de inicio de sesión: "+(xhr.responseJSON?.error || textStatus), 'danger');
+            },
+            contentType:'application/json'
+        });
+    }
+
+    this.cerrarSesion=function(){
+        $.getJSON("/cerrarSesion",function(){
+            console.info("Sesión cerrada");
+            $.removeCookie("nick");
+        });
     }
 }

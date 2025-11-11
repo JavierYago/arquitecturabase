@@ -1,0 +1,19 @@
+<div id="fmLogin">
+    <form id="formLogin" novalidate>
+        <div class="form-group">
+            <label for="email">Dirección email</label>
+            <input type="email" class="form-control" placeholder="tu@correo.com" id="email" required>
+            <small class="form-text text-muted">Usa el email con el que te registraste.</small>
+        </div>
+        <div class="form-group">
+            <label for="pwd">Contraseña</label>
+            <input type="password" class="form-control" placeholder="Mínimo 6 caracteres" id="pwd" minlength="6" required>
+            <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
+        </div>
+        <div id="loginFeedback" class="text-danger mb-2" aria-live="polite"></div>
+        <button type="submit" id="btnLogin" class="btn btn-primary">Iniciar sesión</button>
+    </form>
+    <div class="mt-2">
+        <small class="text-muted">¿No tienes cuenta? Regístrate y confirma tu email.</small>
+    </div>
+</div>

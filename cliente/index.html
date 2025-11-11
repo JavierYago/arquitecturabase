@@ -16,6 +16,8 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
+
     </head>
     <body>
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -46,8 +48,15 @@
                 </div>
             </div>
             <div id="au"></div>
+            <div id="registro"></div>
+            <div id="msg"></div>
         </div>
 
+        <div
+            id="g_id_onload"
+            data-client_id=Client_ID_PLACEHOLDER
+            data-login_uri=LOGIN_URI_PLACEHOLDER
+            data-skip_prompt_cookie="nick"></div>
         
         <script>
             rest=new ClienteRest();

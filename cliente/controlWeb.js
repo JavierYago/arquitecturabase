@@ -1,10 +1,16 @@
 function ControlWeb(){
     this.mostrarAgregarUsuario = function(){
+        $('#bnv').remove();
+        $('#mAU').remove();
         let cadena='<div id="mAU" class="form-group">';
-        cadena = cadena + '<label for="nick">Name:</label>';
-        cadena = cadena + '<input type="text" class="form-control" id="nick">';
+        cadena = cadena + '<div class="card"><div class="card-body">';
+        cadena = cadena +'<div class="form-group">';
+        cadena = cadena + '<label for="nick">Nick:</label>';
+        cadena = cadena + '<p><input type="text" class="form-control" id="nick" placeholder="introduce un nick"></p>';
         cadena = cadena + '<button id="btnAU" type="submit" class="btn btn-primary">Submit</button>';
+        cadena = cadena + '<div><a href="/auth/google"><img src="./cliente/img/web_light_rd_SI@1x.png" style="height:40px;"></a></div>';
         cadena = cadena + '</div>';
+        cadena = cadena + '</div></div></div>';
         $("#au").append(cadena);
         $("#btnAU").on("click",function(){
             let nick=$("#nick").val();
@@ -12,6 +18,7 @@ function ControlWeb(){
             $("#mAU").remove();
         });
     }
+
     
 
     this.mostrarPanelOps = function(){
@@ -142,17 +149,83 @@ function ControlWeb(){
             cw.mostrarMensaje("Bienvenido al sistema, "+nick);
         }
         else{
-            cw.mostrarAgregarUsuario();
+            cw.mostrarRegistro();
         }
+    };
+
+    this.mostrarRegistro=function(){
+        $("#fmRegistro").remove();
+        $("#registro").load("./cliente/registro.html",function(){
+            const $form = $("#formRegistro");
+            const $fb = $('#registroFeedback');
+            $("#btnRegistro").on("click",function(e){
+                e.preventDefault();
+                $fb.text('');
+                let email=$("#email").val().trim();
+                let pwd=$("#pwd").val();
+                if(!email || !pwd){
+                    $fb.text('Completa todos los campos obligatorios.');
+                    return;
+                }
+                if(pwd.length<6){
+                    $fb.text('La contraseña debe tener mínimo 6 caracteres.');
+                    return;
+                }
+                // Validación básica de email
+                const re=/^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+                if(!re.test(email)){
+                    $fb.text('Formato de email inválido.');
+                    return;
+                }
+                rest.registrarUsuario(email, pwd);
+            });
+        });
+    };
+
+    this.limpiar= function(){
+        $("#txt").remove();
+        $("#mAU").remove();
+        $("#mH").remove();
+        $("#fmRegistro").remove();
+        $("#fmLogin").remove();
+    };
+
+    this.mostrarLogin=function(){
+        if ($.cookie("nick")){
+            return true;
+        };
+        $("#fmLogin").remove();
+        $("#registro").load("./cliente/login.html",function(){
+            const $fb = $('#loginFeedback');
+            $("#btnLogin").on("click",function(e){
+                e.preventDefault();
+                $fb.text('');
+                let email=$("#email").val().trim();
+                let pwd=$("#pwd").val();
+                if(!email || !pwd){
+                    $fb.text('Introduce email y contraseña.');
+                    return;
+                }
+                const re=/^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+                if(!re.test(email)){
+                    $fb.text('Email inválido.');
+                    return;
+                }
+                if(pwd.length<6){
+                    $fb.text('Contraseña demasiado corta.');
+                    return;
+                }
+                rest.loginUsuario(email, pwd);
+            });
+        });
     };
 
     this.salir=function(){
         $.removeCookie("nick");
-        cw.mostrarMensaje("Hasta luego!");
+        //cw.mostrarMensaje("Hasta luego!");
         //añade 20 segundos de espera antes de recargar la página
-        setTimeout(function(){
-            location.reload();
-        }, 2000);
+        location.reload();
+        rest.cerrarSesion();
     };
 
 }

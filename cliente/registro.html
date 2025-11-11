@@ -1,0 +1,27 @@
+<div id="fmRegistro">
+    <form id="formRegistro" novalidate>
+        <div class="form-group">
+            <label for="apellidos">Apellidos</label>
+            <input type="text" class="form-control" placeholder="Apellidos" id="apellidos">
+        </div>
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" placeholder="Nombre" id="nombre">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" placeholder="tu@correo.com" id="email" required>
+            <div class="invalid-feedback">Introduce un email válido.</div>
+        </div>
+        <div class="form-group">
+            <label for="pwd">Contraseña</label>
+            <input type="password" class="form-control" placeholder="Mínimo 6 caracteres" id="pwd" minlength="6" required>
+            <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
+        </div>
+        <div id="registroFeedback" class="text-danger mb-2" aria-live="polite"></div>
+        <button type="submit" id="btnRegistro" class="btn btn-primary">Registrar</button>
+    </form>
+    <div class="mt-2">
+        <small class="text-muted">Recibirás un correo para confirmar tu cuenta.</small>
+    </div>
+</div>
