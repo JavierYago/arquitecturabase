@@ -18,8 +18,11 @@ function ControlWeb(){
             $("#mAU").remove();
         });
     }
+<<<<<<< HEAD
 
     
+=======
+>>>>>>> da097587932111f026bf5dd88dd072a5c303fb94
 
     this.mostrarPanelOps = function(){
         const panel = `
@@ -116,6 +119,7 @@ function ControlWeb(){
         });
     };
     // fin: panel y handlers compactos
+<<<<<<< HEAD
 
     // Método utilitario para mostrar mensajes desde fuera del panel
         // Uso: cw.mostrarMensaje('texto', 'success'|'info'|'warning'|'danger')
@@ -229,3 +233,6 @@ function ControlWeb(){
     };
 
 }
+=======
+}
+>>>>>>> da097587932111f026bf5dd88dd072a5c303fb94
