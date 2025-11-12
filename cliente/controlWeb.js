@@ -217,6 +217,11 @@ function ControlWeb(){
                 }
                 rest.loginUsuario(email, pwd);
             });
+            //mostrar login con Google
+            $("#btnGoogle").on("click",function(e){
+                e.preventDefault();
+                window.location.href="/auth/google";
+            });
         });
     };
 
